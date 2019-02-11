@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TicTacToeV1</string>
+    <string name="btn1String"></string>
+    <string name="btn2String"></string>
+    <string name="btn3String"></string>
+    <string name="btn4String"></string>
+    <string name="btn5String"></string>
+    <string name="btn6String"></string>
+    <string name="btn7String"></string>
+    <string name="btn8String"></string>
+    <string name="btn9String"></string>
+    <string name="headlineString">Tic Tac Toe V1</string>
+    <string name="winnerText">Waiting for result ..</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
