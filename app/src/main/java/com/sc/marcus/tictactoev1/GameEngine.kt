@@ -1,11 +1,17 @@
 package com.sc.marcus.tictactoev1
 
-class GameEngine(private val playMode: Any?) {
+class GameEngine(playMode: String?) {
+
+    private var aiEngine: GameAiEngine? = null
+
+    init {
+        if(playMode == "Ai") aiEngine = GameAiEngine()
+    }
 
     private var xArray = mutableListOf<Int>()
     private var oArray = mutableListOf<Int>()
-    private var turnTracker = 0
-    private val aiEngine = GameAiEngine()
+    private var turnTracker = 1
+
     private val winningList = arrayOf(
         123, 456, 789, /* Three lines horizontally starting left side top */
         147, 258, 369, /* Three lines vertically starting upper left */
@@ -25,8 +31,6 @@ class GameEngine(private val playMode: Any?) {
         if(turnTracker % 2 == 0) {
             xArray.add(buttonPos)
             checkIfWon(xArray)
-        } else if(playMode == "Ai") {
-            aiEngine
         }
         else {
             oArray.add(buttonPos)
@@ -42,6 +46,10 @@ class GameEngine(private val playMode: Any?) {
             return oArray
         }
         return null
+    }
+
+    fun returnTurnTracker(): Int {
+        return turnTracker
     }
 
     /* Makes sure a button that has already been clicked is not clicked again */
@@ -63,14 +71,13 @@ class GameEngine(private val playMode: Any?) {
     fun checkIfWon(playerList: MutableList<Int>): Boolean {
         if (playerList.isEmpty()) return false
         var counter: Int
+        val temp = mutableListOf<Int>()
 
         for(combination in winningList) {
             counter = 0
-            val temp = mutableListOf<Int>()
             combination.toString().toCharArray().forEach { number ->
                 temp.add(number.toString().toInt())
             }
-
             for(i in playerList.indices) {
                 for(j in temp.indices) {
                     if(temp[j] == playerList[i]) {
@@ -78,6 +85,7 @@ class GameEngine(private val playMode: Any?) {
                     }
                 }
             }
+            temp.clear()
             if(counter == 3) return true
         }
         return false
@@ -86,5 +94,15 @@ class GameEngine(private val playMode: Any?) {
     fun resetGame() {
         xArray.clear()
         oArray.clear()
+        turnTracker = 1
+    }
+
+    fun aiMove(): Int? {
+        turnTracker++
+        if(turnTracker <= 9){
+            val temp = aiEngine?.makeMove(returnXArray(), returnOArray())
+            return temp!![temp.size - 1]
+        }
+        return null
     }
 }
