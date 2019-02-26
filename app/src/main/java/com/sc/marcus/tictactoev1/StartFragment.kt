@@ -1,6 +1,7 @@
 package com.sc.marcus.tictactoev1
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_start.*
 
 class StartFragment : Fragment() {
+
+    var difficulty: String? = null
+    var gameMode: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,14 +26,23 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnVs.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
-                bundle.putString("playMode", "Versus")
-            })
+            gameMode = "Versus"
         }
 
         btnAi.setOnClickListener {
+            btnAi.setBackgroundColor(Color.BLUE)
+            gameMode = "Ai"
+        }
+
+        btnEasy.setOnClickListener {
+            btnEasy.setBackgroundColor(Color.BLUE)
+            difficulty = "Easy"
+        }
+
+        btnStartGame.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
-                bundle.putString("playMode", "Ai")
+                bundle.putString("playMode", gameMode)
+                bundle.putString("difficulty", difficulty)
             })
         }
     }

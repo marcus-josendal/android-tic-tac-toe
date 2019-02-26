@@ -16,4 +16,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btnAi">Ai</string>
     <string name="btnVs">Versus</string>
+    <string name="btnEasyString">Easy</string>
+    <string name="btnMediumString">Medium</string>
+    <string name="btnGowString">God of War</string>
+    <string name="btnStartGameString">Start Game!</string>
 </resources>

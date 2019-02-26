@@ -1,11 +1,18 @@
 package com.sc.marcus.tictactoev1
 
-class GameEngine(playMode: String?) {
+class GameEngine(playMode: String?, difficulty: String?) {
 
     private var aiEngine: GameAiEngine? = null
+    private var diff: String? = null
 
     init {
         if(playMode == "Ai") aiEngine = GameAiEngine()
+
+        when(difficulty) {
+            "Easy" -> diff = "Easy"
+            "Medium" -> diff = "Medium"
+            "Hard" -> diff = "Hard"
+        }
     }
 
     private var xArray = mutableListOf<Int>()
@@ -46,10 +53,6 @@ class GameEngine(playMode: String?) {
             return oArray
         }
         return null
-    }
-
-    fun returnTurnTracker(): Int {
-        return turnTracker
     }
 
     /* Makes sure a button that has already been clicked is not clicked again */
@@ -99,9 +102,17 @@ class GameEngine(playMode: String?) {
 
     fun aiMove(): Int? {
         turnTracker++
-        if(turnTracker <= 9){
-            val temp = aiEngine?.makeMove(returnXArray(), returnOArray())
-            return temp!![temp.size - 1]
+        var tempOArray: MutableList<Int>?
+        if(turnTracker <= 9 && diff == "Easy"){
+            println("hello")
+            tempOArray = aiEngine?.makeMoveEasy(returnXArray(), returnOArray())
+            return tempOArray!![tempOArray.size - 1]
+        } else if(turnTracker <= 9 && diff == "Medium") {
+            tempOArray = aiEngine?.makeMoveMedium(returnXArray(), returnOArray())
+            return tempOArray!![tempOArray.size - 1]
+        } else if(turnTracker <= 9 && diff == "Hard") {
+            tempOArray = aiEngine?.makeMoveHard(returnXArray(), returnOArray())
+            return tempOArray!![tempOArray.size - 1]
         }
         return null
     }

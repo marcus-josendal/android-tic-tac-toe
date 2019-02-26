@@ -11,5 +11,6 @@
     <fragment android:id="@+id/gameFragment" android:name="com.sc.marcus.tictactoev1.GameFragment"
               android:label="fragment_game" tools:layout="@layout/fragment_game">
         <argument android:name="playMode" app:argType="string" android:defaultValue="Versus"/>
+        <argument android:name="difficulty" app:argType="string" app:nullable="true" android:defaultValue="Easy"/>
     </fragment>
 </navigation>

@@ -20,4 +20,33 @@
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="68dp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnAi" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/linearLayout">
+        <Button
+                android:text="@string/btnEasyString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btnEasy" android:layout_weight="1"/>
+        <Button
+                android:text="@string/btnMediumString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btnMedium" android:layout_weight="1"/>
+        <Button
+                android:text="@string/btnGowString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btnGow" android:layout_weight="1"/>
+    </LinearLayout>
+    <Button
+            android:text="@string/btnStartGameString"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:id="@+id/btnStartGame" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
 </android.support.constraint.ConstraintLayout>

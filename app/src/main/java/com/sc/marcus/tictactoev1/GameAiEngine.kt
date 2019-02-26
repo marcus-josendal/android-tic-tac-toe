@@ -3,11 +3,10 @@ package com.sc.marcus.tictactoev1
 class GameAiEngine {
 
     /* Easy difficulty */
-    fun makeMove(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
-        val tempOArray = oArray
+    fun makeMoveEasy(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
 
         var random: Int?
-        while(tempOArray.size == oArray.size) {
+        while(oArray.size == oArray.size) {
             random = (1..9).random()
             if(!xArray.contains(random) && !oArray.contains(random)) {
                 oArray.add(random)
@@ -18,8 +17,13 @@ class GameAiEngine {
     }
 
     /*Medium difficulty */
-    fun makeMoveMedium(xArray: MutableList<Int>, oArray: MutableList<Int>) {
+    fun makeMoveMedium(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
+        return oArray
+    }
 
+    /* Hard difficulty */
+    fun makeMoveHard(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
+        return oArray
     }
 
 }

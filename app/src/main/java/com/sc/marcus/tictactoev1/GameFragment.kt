@@ -15,11 +15,12 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(context, arguments?.getString("playMode") ?: "Nothing", Toast.LENGTH_SHORT).show()
-
         val playMode = arguments?.getString("playMode").toString()
+        val difficulty = arguments?.getString("difficulty").toString()
 
-        val engine = GameEngine(playMode)
+        Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty", Toast.LENGTH_SHORT).show()
+
+        val engine = GameEngine(playMode, difficulty)
         val btnArray = arrayListOf<Button>(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
 
         btn1.setOnClickListener{
@@ -84,7 +85,6 @@ class GameFragment : Fragment() {
             btnName.text = "X"
             engine.updateArray(btnNumber)
             if(playMode == "Ai"){
-                println("ai move")
                 val aiBtnNumber = engine.aiMove()
                 when (aiBtnNumber) {
                     1 -> btn1.text = "O"
@@ -103,6 +103,7 @@ class GameFragment : Fragment() {
             btnName.text = "O"
             engine.updateArray(btnNumber)
         }
+
     }
 
     @SuppressLint("SetTextI18n")
