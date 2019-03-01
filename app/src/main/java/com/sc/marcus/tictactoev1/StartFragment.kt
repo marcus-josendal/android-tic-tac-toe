@@ -39,6 +39,11 @@ class StartFragment : Fragment() {
             difficulty = "Easy"
         }
 
+        btnMedium.setOnClickListener {
+            difficulty = "Medium"
+            btnMedium.setBackgroundColor(Color.BLUE)
+        }
+
         btnStartGame.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
                 bundle.putString("playMode", gameMode)

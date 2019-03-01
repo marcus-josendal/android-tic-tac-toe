@@ -12,6 +12,14 @@ import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
 
+    private val winningList = arrayOf(
+        "123", "456", "789", /* Three lines horizontally starting left side top */
+        "147", "258", "369", /* Three lines vertically starting upper left */
+        "159", "951", /* Across starting upper left corner and bottom right */
+        "357", "753", /* Across starting upper right corner and bottom left */
+        "321", "654", "987", /* Three lines horizontally starting right side top */
+        "741", "852", "963" /* Three lines vertically starting bottom right */)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -111,14 +119,14 @@ class GameFragment : Fragment() {
         val xArray = engine.returnXArray()
         val oArray = engine.returnOArray()
 
-        if(engine.checkIfWon(xArray)) {
+        if(engine.checkIfWon(xArray, winningList)) {
             winnerText.text = "X won!"
             disableButtons(btnArray)
-        } else if(engine.checkIfWon(oArray)) {
+        } else if(engine.checkIfWon(oArray, winningList)) {
             winnerText.text = "O won!"
             disableButtons(btnArray)
         //TODO: Check draw in a more fashionable manner
-        } else if(engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray) && !engine.checkIfWon(xArray)) {
+        } else if(engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray, winningList) && !engine.checkIfWon(xArray, winningList)) {
             winnerText.text = "Draw!"
             disableButtons(btnArray)
         }
