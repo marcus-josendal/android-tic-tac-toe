@@ -52,9 +52,39 @@ class GameAiEngine {
         return oArray
     }
 
-    private fun blockerPosition(xArray: MutableList<Int>, winningList: Array<String>, i: Int, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
-        if (xArray.contains(makeInt(winningList, i, pos1)) && xArray.contains(makeInt(winningList, i, pos2))) {
-            val blocker = makeInt(winningList, i, blockPos)
+    fun checkIfOCanWin(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int>? {
+        var counter = 0
+
+        for(i in winningList.indices) {
+            counter++
+            if(counter == winningList.size - 1) {
+                return null
+            }
+            for(j in winningList[i].toCharArray().indices) {
+                if(oArray.contains(makeInt(winningList, i, 0)) && oArray.contains(makeInt(winningList, i, 1))) {
+                    val move = makeInt(winningList, i, 2)
+                    if (!xArray.contains(move) && !oArray.contains(move)) {
+                        oArray.add(move)
+                        println(oArray)
+                        return oArray
+                    }
+                }
+                if(oArray.contains(makeInt(winningList, i, 0)) && oArray.contains(makeInt(winningList, i, 2))) {
+                    val move = makeInt(winningList, i, 1)
+                    if (!xArray.contains(move) && !oArray.contains(move)) {
+                        oArray.add(move)
+                        println(oArray)
+                        return oArray
+                    }
+                }
+            }
+        }
+        return null
+    }
+
+    private fun blockerPosition(xArray: MutableList<Int>, winningList: Array<String>, index: Int, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
+        if (xArray.contains(makeInt(winningList, index, pos1)) && xArray.contains(makeInt(winningList, index, pos2))) {
+            val blocker = makeInt(winningList, index, blockPos)
             if (!xArray.contains(blocker) && !oArray.contains(blocker)) {
                 oArray.add(blocker)
                 return true

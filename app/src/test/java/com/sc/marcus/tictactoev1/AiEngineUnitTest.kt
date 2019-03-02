@@ -21,7 +21,61 @@ class AiEngineUnitTest {
     }
 
     @Test
-    fun returnCorrectEndingNumber() {
-        val listItem1 = "12"
+    fun shouldReturnCorrectArrayAfterMediumMove() {
+        val xArray1 = mutableListOf(1, 2)
+        val oArray1 = mutableListOf(4, 5)
+        val firstTestExpectedResult = mutableListOf(4, 5, 3)
+
+        val xArray2 = mutableListOf(1, 2, 6, 7)
+        val oArray2 = mutableListOf(4, 5, 8)
+        val secondTestExpectedResult = mutableListOf(4, 5, 8, 3)
+
+        val xArray3 = mutableListOf(1)
+        val oArray3 = mutableListOf<Int>()
+        val thirdTestExpectedResult = 1
+
+        assertEquals(aiEngine.makeMoveMedium(xArray1, oArray1, winningList), firstTestExpectedResult)
+        assertEquals(aiEngine.makeMoveMedium(xArray2, oArray2, winningList), secondTestExpectedResult)
+        assertEquals(aiEngine.makeMoveMedium(xArray3, oArray3, winningList).size, thirdTestExpectedResult)
+    }
+
+    @Test
+    fun shouldReturnCorrectArrayAfterBlock() {
+        val xArray1 = mutableListOf(1, 2)
+        val oArray1 = mutableListOf(4, 5)
+        val firstTestExpectedResult = mutableListOf(4, 5, 3)
+
+        val xArray2 = mutableListOf(1, 2, 6, 7)
+        val oArray2 = mutableListOf(4, 5, 8)
+        val secondTestExpectedResult = mutableListOf(4, 5, 8, 3)
+
+        val xArray3 = mutableListOf(1, 3)
+        val oArray3 = mutableListOf(5)
+        val thirdExpectedResult = mutableListOf(5, 2)
+
+        assertEquals(aiEngine.makeBlock(xArray1, oArray1, winningList), firstTestExpectedResult)
+        assertEquals(aiEngine.makeBlock(xArray2, oArray2, winningList), secondTestExpectedResult)
+        assertEquals(aiEngine.makeBlock(xArray3, oArray3, winningList), thirdExpectedResult)
+    }
+
+    @Test
+    fun shouldReturnArrayContainingWinningCombinationIfOCanWin() {
+        val xArray1 = mutableListOf(1, 2, 8)
+        val oArray1 = mutableListOf(4, 5)
+        val firstTestExpectedResult = mutableListOf(4, 5, 6)
+
+        val xArray2 = mutableListOf(1, 2, 4)
+        val oArray2 = mutableListOf(3, 5)
+        val secondTestExpectedResult = mutableListOf(3, 5, 7)
+
+        val xArray3 = mutableListOf(6, 9, 1)
+        val oArray3 = mutableListOf(3, 6)
+        val thirdTestExpectedResult = null
+
+        assertEquals(aiEngine.checkIfOCanWin(xArray1, oArray1, winningList), firstTestExpectedResult)
+        assertEquals(aiEngine.checkIfOCanWin(xArray2, oArray2, winningList), secondTestExpectedResult)
+        assertEquals(aiEngine.checkIfOCanWin(xArray3, oArray3, winningList), thirdTestExpectedResult)
+
+
     }
 }
