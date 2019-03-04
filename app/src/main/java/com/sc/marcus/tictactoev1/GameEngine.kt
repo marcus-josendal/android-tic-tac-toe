@@ -110,10 +110,11 @@ class GameEngine(playMode: String?, difficulty: String?) {
             return tempOArray!![tempOArray.size - 1]
         } else if(turnTracker <= 9 && diff == "Medium") {
             tempOArray = aiEngine?.makeMoveMedium(returnXArray(), returnOArray(), winningList)
+            println(tempOArray)
             return tempOArray!![tempOArray.size - 1]
         } else if(turnTracker <= 9 && diff == "Hard") {
-            //tempOArray = aiEngine?.makeMoveHard(returnXArray(), returnOArray(), winningList)
-            //return tempOArray!![tempOArray.size - 1]
+            tempOArray = aiEngine?.makeMoveHard(returnXArray(), returnOArray(), winningList)
+            return tempOArray!![tempOArray.size - 1]
         }
         return null
     }

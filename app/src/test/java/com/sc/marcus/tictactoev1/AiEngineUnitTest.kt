@@ -36,7 +36,7 @@ class AiEngineUnitTest {
 
         assertEquals(aiEngine.makeMoveMedium(xArray1, oArray1, winningList), firstTestExpectedResult)
         assertEquals(aiEngine.makeMoveMedium(xArray2, oArray2, winningList), secondTestExpectedResult)
-        assertEquals(aiEngine.makeMoveMedium(xArray3, oArray3, winningList).size, thirdTestExpectedResult)
+        assertEquals(aiEngine.makeMoveMedium(xArray3, oArray3, winningList)!!.size, thirdTestExpectedResult)
     }
 
     @Test
