@@ -6,6 +6,7 @@ class GameAiEngine {
 
     /* Easy difficulty - makes random moves. You're actually mentally challenged if you lose to this */
     fun makeMoveEasy(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
+
         var random: Int?
         while(oArray.size == oArray.size) {
             random = (1..9).random()
@@ -32,27 +33,29 @@ class GameAiEngine {
     fun makeMoveHard(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int>? {
 
         val tmpOArray = checkIfOCanWin(xArray, oArray, winningList)
-
         when {
             xArray.size == 1 -> {
                 oArray.add(firstOMoveHard(xArray)!!)
                 return oArray
             }
-            xArray.size == 2 -> return if(secondMoveEdgeCase(xArray) && !oArray.contains(5)) {
-                oArray.add(5)
-                oArray
-            } else tmpOArray ?: if(xArray[1] == 9) {
-                oArray.add(3)
-                oArray
-            } else {
-                makeBlock(xArray, oArray, winningList)
+            xArray.size == 2 -> when {
+                secondMoveEdgeCase(xArray) && !oArray.contains(5) -> {
+                    oArray.add(5)
+                    return oArray
+                }
+                xArray.contains(1) && xArray.contains(9) -> oArray.add(6)
+                xArray.contains(7) && xArray.contains(3) -> oArray.add(4)
+                tmpOArray != null -> return tmpOArray
+                xArray[1] == 9 && !xArray.contains(7) && !xArray.contains(3) -> {
+                    oArray.add(3)
+                    return oArray
+                }
+                else -> return makeBlock(xArray, oArray, winningList)
             }
             xArray.size == 3 -> return tmpOArray ?: makeBlock(xArray, oArray, winningList)
             xArray.size == 4 -> return tmpOArray ?: makeBlock(xArray, oArray, winningList)
-            else -> {
-                return oArray
-            }
         }
+        return oArray
     }
 
     fun firstOMoveHard(xArray: MutableList<Int>): Int? {
