@@ -2,7 +2,6 @@ package com.sc.marcus.tictactoev1
 
 class GameAiEngine {
 
-    val engine = GameEngine("foo", "bar")
 
     /* Easy difficulty - makes random moves. You're actually mentally challenged if you lose to this */
     fun makeMoveEasy(xArray: MutableList<Int>, oArray: MutableList<Int>): MutableList<Int> {
@@ -124,7 +123,7 @@ class GameAiEngine {
         return null
     }
 
-    private fun blockerPosition(xArray: MutableList<Int>, winningList: Array<String>, index: Int, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
+    fun blockerPosition(xArray: MutableList<Int>, winningList: Array<String>, index: Int, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
         if (xArray.contains(makeInt(winningList, index, pos1)) && xArray.contains(makeInt(winningList, index, pos2))) {
             val blocker = makeInt(winningList, index, blockPos)
             if (!xArray.contains(blocker) && !oArray.contains(blocker)) {
@@ -135,7 +134,7 @@ class GameAiEngine {
         return false
     }
 
-    private fun blockerPositionEdgeCase(xArray: MutableList<Int>, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
+    fun blockerPositionEdgeCase(xArray: MutableList<Int>, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
         if (xArray.contains(pos1) && xArray.contains(pos2)) {
             if (!xArray.contains(blockPos) && !oArray.contains(blockPos)) {
                 oArray.add(blockPos)
@@ -146,7 +145,7 @@ class GameAiEngine {
     }
 
     /* Returns an int that is an index of a char array that is an array index of a String array - Used for shortening code */
-    private fun makeInt(array: Array<String>, pos1: Int, pos2: Int): Int {
+    fun makeInt(array: Array<String>, pos1: Int, pos2: Int): Int {
 
         val array1 = mutableListOf<String>()
         array.map { number ->
