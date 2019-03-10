@@ -88,7 +88,6 @@ class GameFragment : Fragment() {
 
     private fun checkGameLogic(btnName: Button, btnNumber: Int, engine: GameEngine, playMode: String) {
         val buttonContent = btnName.text.toString()
-
         if(engine.isEven() && engine.isClicked(buttonContent)) {
             btnName.text = "X"
             engine.updateArray(btnNumber)
@@ -107,7 +106,6 @@ class GameFragment : Fragment() {
                 }
             }
         } else if (engine.isClicked(buttonContent) && playMode == "Versus") {
-            println("O move")
             btnName.text = "O"
             engine.updateArray(btnNumber)
         }
@@ -125,7 +123,6 @@ class GameFragment : Fragment() {
         } else if(engine.checkIfWon(oArray, winningList)) {
             winnerText.text = "O won!"
             disableButtons(btnArray)
-        //TODO: Check draw in a more fashionable manner
         } else if(engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray, winningList) && !engine.checkIfWon(xArray, winningList)) {
             winnerText.text = "Draw!"
             disableButtons(btnArray)

@@ -17,6 +17,10 @@ class GameAiEngine {
         return oArray
     }
 
+    /* Medium difficulty - if O can win it makes a winning move and if it can block X it will block.
+       if neither are true it will do a random move. This way you can still trick it with "two
+       dimensional" combinations
+     */
     fun makeMoveMedium(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int>? {
 
         val tmpOArray = checkIfOCanWin(xArray, oArray, winningList)
@@ -28,7 +32,9 @@ class GameAiEngine {
             else -> oArray
         }
     }
-
+    /* Impossible to beat - The first two moves are hardcoded to ensure that it is not possible to win
+       the remaining logic is the same as the medium difficulty.
+     */
     fun makeMoveHard(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int>? {
 
         val tmpOArray = checkIfOCanWin(xArray, oArray, winningList)
@@ -57,6 +63,7 @@ class GameAiEngine {
         return oArray
     }
 
+    /* First O-move for hard difficulty */
     fun firstOMoveHard(xArray: MutableList<Int>): Int? {
 
         return when {
@@ -70,10 +77,14 @@ class GameAiEngine {
         }
     }
 
+    /* Returns false if xArray does not contain 5 */
     fun secondMoveEdgeCase(xArray: MutableList<Int>): Boolean {
         return !xArray.contains(5)
     }
 
+    /* Makes block on both ending tiles and middle tiles
+       If it cannot make a block it will do a random move
+    */
     fun makeBlock(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int> {
         var counter = 0
 
@@ -95,6 +106,7 @@ class GameAiEngine {
         return oArray
     }
 
+    /* Checks if O can win. If it can win it will return a winning array, if not it will return null */
     fun checkIfOCanWin(xArray: MutableList<Int>, oArray: MutableList<Int>, winningList: Array<String>): MutableList<Int>? {
         var counter = 0
 
@@ -123,6 +135,7 @@ class GameAiEngine {
         return null
     }
 
+    /* Returns true of a position in the xArray can be blocked */
     fun blockerPosition(xArray: MutableList<Int>, winningList: Array<String>, index: Int, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
         if (xArray.contains(makeInt(winningList, index, pos1)) && xArray.contains(makeInt(winningList, index, pos2))) {
             val blocker = makeInt(winningList, index, blockPos)
@@ -134,6 +147,7 @@ class GameAiEngine {
         return false
     }
 
+    /* Some blocking combinations didn't work somehow. Had to make this to handle the three edgecases */
     fun blockerPositionEdgeCase(xArray: MutableList<Int>, oArray: MutableList<Int>, pos1: Int, pos2: Int, blockPos: Int): Boolean {
         if (xArray.contains(pos1) && xArray.contains(pos2)) {
             if (!xArray.contains(blockPos) && !oArray.contains(blockPos)) {
