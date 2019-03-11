@@ -1,4 +1,4 @@
-package com.sc.marcus.tictactoev1
+package com.sc.marcus.tictactoev1.gamelogic
 
 class GameAiEngine {
 

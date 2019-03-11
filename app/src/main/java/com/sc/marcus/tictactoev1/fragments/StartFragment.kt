@@ -1,4 +1,4 @@
-package com.sc.marcus.tictactoev1
+package com.sc.marcus.tictactoev1.fragments
 
 
 import android.graphics.Color
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.sc.marcus.tictactoev1.R
 import kotlinx.android.synthetic.main.fragment_start.*
 
 class StartFragment : Fragment() {

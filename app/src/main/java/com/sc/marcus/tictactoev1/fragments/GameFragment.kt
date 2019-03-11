@@ -1,4 +1,4 @@
-package com.sc.marcus.tictactoev1
+package com.sc.marcus.tictactoev1.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import com.sc.marcus.tictactoev1.gamelogic.GameEngine
+import com.sc.marcus.tictactoev1.R
 import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {

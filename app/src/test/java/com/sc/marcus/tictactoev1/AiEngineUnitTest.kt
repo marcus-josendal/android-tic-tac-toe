@@ -1,5 +1,6 @@
 package com.sc.marcus.tictactoev1
 
+import com.sc.marcus.tictactoev1.gamelogic.GameAiEngine
 import org.junit.Test
 
 import org.junit.Assert.*

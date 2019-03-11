@@ -4,11 +4,11 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/startFragment">
 
-    <fragment android:id="@+id/startFragment" android:name="com.sc.marcus.tictactoev1.StartFragment"
+    <fragment android:id="@+id/startFragment" android:name="com.sc.marcus.tictactoev1.fragments.StartFragment"
               android:label="fragment_start" tools:layout="@layout/fragment_start">
         <action android:id="@+id/action_startFragment_to_gameFragment" app:destination="@id/gameFragment"/>
     </fragment>
-    <fragment android:id="@+id/gameFragment" android:name="com.sc.marcus.tictactoev1.GameFragment"
+    <fragment android:id="@+id/gameFragment" android:name="com.sc.marcus.tictactoev1.fragments.GameFragment"
               android:label="fragment_game" tools:layout="@layout/fragment_game">
         <argument android:name="playMode" app:argType="string" android:defaultValue="Versus"/>
         <argument android:name="difficulty" app:argType="string" app:nullable="true" android:defaultValue="Easy"/>
