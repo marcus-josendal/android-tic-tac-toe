@@ -21,7 +21,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val allPlayersAndScore: LiveData<List<Player>>
 
     init {
-        val playerDao = AppDatabase.getDatabase(application).playerDao()
+        val playerDao = AppDatabase.getDatabase(application, scope).playerDao()
         repository = PlayerRepository(playerDao)
         allPlayersAndScore = repository.allPlayersAndScore
     }

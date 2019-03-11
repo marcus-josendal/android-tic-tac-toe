@@ -50,6 +50,8 @@ class StartFragment : Fragment() {
             btnGow.setBackgroundColor(Color.BLUE)
         }
 
+        val player1Name = player1Name.text.toString()
+
         btnStartGame.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
                 bundle.putString("playMode", gameMode)

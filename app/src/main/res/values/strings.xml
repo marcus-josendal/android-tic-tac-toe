@@ -20,4 +20,6 @@
     <string name="btnMediumString">Medium</string>
     <string name="btnGowString">God of War</string>
     <string name="btnStartGameString">Start Game!</string>
+    <string name="btnHighscoreString">Leaderboard</string>
+    <string name="player1NameString">Name</string>
 </resources>

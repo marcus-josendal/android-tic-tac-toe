@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.sc.marcus.tictactoev1.gamelogic.GameEngine
 import com.sc.marcus.tictactoev1.R
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -81,6 +82,11 @@ class GameFragment : Fragment() {
         btnReset.setOnClickListener{
             resetGame(engine, btnArray)
         }
+
+        btnHighscore.setOnClickListener{
+            findNavController().navigate(R.id.action_gameFragment_to_highscoreFragment)
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

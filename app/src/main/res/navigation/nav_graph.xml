@@ -12,5 +12,8 @@
               android:label="fragment_game" tools:layout="@layout/fragment_game">
         <argument android:name="playMode" app:argType="string" android:defaultValue="Versus"/>
         <argument android:name="difficulty" app:argType="string" app:nullable="true" android:defaultValue="Easy"/>
+        <action android:id="@+id/action_gameFragment_to_highscoreFragment" app:destination="@id/highscoreFragment"/>
     </fragment>
+    <fragment android:id="@+id/highscoreFragment" android:name="com.sc.marcus.tictactoev1.fragments.HighscoreFragment"
+              android:label="HighscoreFragment"/>
 </navigation>
