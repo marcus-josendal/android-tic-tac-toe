@@ -28,8 +28,6 @@ public abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "player_database"
                 )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .addCallback(PlayerDatabaseCallback(scope))
                     .build()
