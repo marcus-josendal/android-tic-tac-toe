@@ -19,7 +19,7 @@ public abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
@@ -29,7 +29,6 @@ public abstract class AppDatabase : RoomDatabase() {
                     "player_database"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(PlayerDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance

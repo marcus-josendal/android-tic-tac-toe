@@ -6,6 +6,8 @@
                                              tools:context=".fragments.StartFragment">
     <Button
             android:text="@string/btnAi"
+            android:background="@drawable/btn_border"
+            android:fontFamily="@font/apache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/btnAi"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
@@ -14,6 +16,8 @@
             android:layout_marginEnd="8dp"/>
     <Button
             android:text="@string/btnVs"
+            android:background="@drawable/btn_border"
+            android:fontFamily="@font/apache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/btnVs"
             android:layout_marginBottom="8dp"
@@ -30,34 +34,62 @@
             android:id="@+id/linearLayout">
         <Button
                 android:text="@string/btnEasyString"
-                android:layout_width="wrap_content"
+                android:background="@drawable/btn_border"
+                android:fontFamily="@font/apache"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content" android:id="@+id/btnEasy" android:layout_weight="1"/>
         <Button
                 android:text="@string/btnMediumString"
-                android:layout_width="wrap_content"
+                android:background="@drawable/btn_border"
+                android:fontFamily="@font/apache"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content" android:id="@+id/btnMedium" android:layout_weight="1"/>
         <Button
                 android:text="@string/btnGowString"
-                android:layout_width="wrap_content"
+                android:background="@drawable/btn_border"
+                android:fontFamily="@font/apache"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content" android:id="@+id/btnGow" android:layout_weight="1"/>
     </LinearLayout>
     <Button
             android:text="@string/btnStartGameString"
+            android:background="@drawable/btn_border"
+            android:fontFamily="@font/apache"
             android:layout_width="wrap_content"
             android:layout_height="54dp"
             android:id="@+id/btnStartGame" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.674"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:text="@string/player1NameString"
+            android:fontFamily="@font/apache"
             android:ems="10"
             android:id="@+id/player1Name" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btnStartGame" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+    <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="310dp"
+            android:layout_height="240dp"
+            android:id="@+id/imageView" android:layout_marginTop="52dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.494"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/apache"
+            android:inputType="textPersonName"
+            android:text="@string/player2String"
+            android:ems="10"
+            android:id="@+id/player2Name" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/player1Name"/>
 </android.support.constraint.ConstraintLayout>

@@ -13,7 +13,12 @@
         <argument android:name="playMode" app:argType="string" android:defaultValue="Versus"/>
         <argument android:name="difficulty" app:argType="string" app:nullable="true" android:defaultValue="Easy"/>
         <action android:id="@+id/action_gameFragment_to_highscoreFragment" app:destination="@id/highscoreFragment"/>
+        <argument android:name="player" app:argType="com.sc.marcus.tictactoev1.database.Player"/>
+        <argument android:name="player2" app:argType="com.sc.marcus.tictactoev1.database.Player"/>
+        <action android:id="@+id/action_gameFragment_to_playerFragment" app:destination="@id/playerFragment"/>
     </fragment>
     <fragment android:id="@+id/highscoreFragment" android:name="com.sc.marcus.tictactoev1.fragments.HighscoreFragment"
               android:label="HighscoreFragment"/>
+    <fragment android:id="@+id/playerFragment" android:name="com.sc.marcus.tictactoev1.fragments.PlayerFragment"
+              android:label="fragment_player_list" tools:layout="@layout/fragment_player_list"/>
 </navigation>

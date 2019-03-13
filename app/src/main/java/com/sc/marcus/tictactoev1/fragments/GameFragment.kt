@@ -1,6 +1,7 @@
 package com.sc.marcus.tictactoev1.fragments
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,10 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.sc.marcus.tictactoev1.gamelogic.GameEngine
 import com.sc.marcus.tictactoev1.R
+import com.sc.marcus.tictactoev1.database.GameViewModel
+import com.sc.marcus.tictactoev1.database.Player
 import kotlinx.android.synthetic.main.fragment_game.*
+import java.lang.Exception
 
 class GameFragment : Fragment() {
 
@@ -23,16 +27,29 @@ class GameFragment : Fragment() {
         "321", "654", "987", /* Three lines horizontally starting right side top */
         "741", "852", "963" /* Three lines vertically starting bottom right */)
 
+    private var btnArray = arrayListOf<Button>()
+    lateinit var viewModel: GameViewModel
+    lateinit var playMode: String
+    lateinit var player1: Player
+    lateinit var player2: Player
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(GameViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
-        val playMode = arguments?.getString("playMode").toString()
+        playMode = arguments?.getString("playMode").toString()
         val difficulty = arguments?.getString("difficulty").toString()
+        player1 = arguments?.getParcelable("player") ?: kotlin.run {
+            throw Exception("This should never happen")
+        }
+        player2 = arguments?.getParcelable("player2")!!
 
-        Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty Player1: $player1 Player2: $player2", Toast.LENGTH_LONG).show()
 
         val engine = GameEngine(playMode, difficulty)
-        val btnArray = arrayListOf<Button>(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
+        btnArray = arrayListOf(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
 
         btn1.setOnClickListener{
             checkGameLogic(btn1, 1, engine, playMode)
@@ -84,9 +101,8 @@ class GameFragment : Fragment() {
         }
 
         btnHighscore.setOnClickListener{
-            findNavController().navigate(R.id.action_gameFragment_to_highscoreFragment)
+            findNavController().navigate(R.id.action_gameFragment_to_playerFragment)
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -125,15 +141,25 @@ class GameFragment : Fragment() {
         val xArray = engine.returnXArray()
         val oArray = engine.returnOArray()
 
-        if(engine.checkIfWon(xArray, winningList)) {
-            winnerText.text = "X won!"
-            disableButtons(btnArray)
-        } else if(engine.checkIfWon(oArray, winningList)) {
-            winnerText.text = "O won!"
-            disableButtons(btnArray)
-        } else if(engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray, winningList) && !engine.checkIfWon(xArray, winningList)) {
-            winnerText.text = "Draw!"
-            disableButtons(btnArray)
+        when {
+            engine.checkIfWon(xArray, winningList) -> {
+                winnerText.text = "X won!"
+                disableButtons(btnArray)
+                viewModel.updateScoreByName(++player1.score, player1.name)
+            }
+            engine.checkIfWon(oArray, winningList) -> {
+                winnerText.text = "O won!"
+                disableButtons(btnArray)
+                if(playMode == "Ai") {
+                    viewModel.updateScoreByName(++player2.score, player2.name)
+                } else if(playMode == "Versus") {
+                    viewModel.updateScoreByName(++player2.score, player2.name)
+                }
+            }
+            engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray, winningList) && !engine.checkIfWon(xArray, winningList) -> {
+                winnerText.text = "Draw!"
+                disableButtons(btnArray)
+            }
         }
     }
 

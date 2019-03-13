@@ -21,5 +21,7 @@
     <string name="btnGowString">God of War</string>
     <string name="btnStartGameString">Start Game!</string>
     <string name="btnHighscoreString">Leaderboard</string>
-    <string name="player1NameString">Name</string>
+    <string name="player1NameString">Player</string>
+    <string name="btnResetString">Reset</string>
+    <string name="player2String">Player 2</string>
 </resources>

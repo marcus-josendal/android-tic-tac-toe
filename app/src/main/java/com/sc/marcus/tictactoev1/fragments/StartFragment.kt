@@ -1,62 +1,193 @@
 package com.sc.marcus.tictactoev1.fragments
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.sc.marcus.tictactoev1.R
+import com.sc.marcus.tictactoev1.database.GameViewModel
+import com.sc.marcus.tictactoev1.database.Player
 import kotlinx.android.synthetic.main.fragment_start.*
 
 class StartFragment : Fragment() {
 
     var difficulty: String? = null
     var gameMode: String? = null
+    lateinit var viewModel: GameViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(GameViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        player2Name.isEnabled = false
+        btnEasy.isEnabled = false
+        btnMedium.isEnabled = false
+        btnGow.isEnabled = false
+
+        fun setButtonInitial(btn: Button) {
+            btn.setBackgroundColor(Color.WHITE)
+            btn.setTextColor(Color.BLACK)
+            btn.setBackgroundResource(R.drawable.btn_border)
+        }
+
+        fun setButtonClicked(btn: Button) {
+            btn.setBackgroundColor(Color.BLACK)
+            btn.setTextColor(Color.WHITE)
+        }
+
+        fun setButtonsDisabledStyle(btnArray: List<Button>) {
+            btnArray.forEach { button ->
+                button.setBackgroundResource(R.drawable.btn_border_disabled)
+                button.setTextColor(Color.GRAY)
+            }
+        }
+
+        btnStartGame.isEnabled = false
+        setButtonsDisabledStyle(listOf(btnStartGame))
+
         btnVs.setOnClickListener {
+            setButtonClicked(btnVs)
+            setButtonInitial(btnAi)
+            setButtonInitial(btnEasy)
+            setButtonInitial(btnMedium)
+            setButtonInitial(btnGow)
+            setButtonInitial(btnStartGame)
+            setButtonsDisabledStyle(listOf(btnEasy, btnMedium, btnGow))
+            difficulty = null
+
+            btnEasy.isEnabled = false
+            btnMedium.isEnabled = false
+            btnGow.isEnabled = false
+            player2Name.isEnabled = true
+            btnStartGame.isEnabled = true
+
             gameMode = "Versus"
         }
 
         btnAi.setOnClickListener {
-            btnAi.setBackgroundColor(Color.BLUE)
+
+            setButtonClicked(btnAi)
+            setButtonInitial(btnVs)
+            setButtonInitial(btnEasy)
+            setButtonInitial(btnMedium)
+            setButtonInitial(btnGow)
+
+            btnEasy.isEnabled = true
+            btnMedium.isEnabled = true
+            btnGow.isEnabled = true
+            player2Name.isEnabled = false
             gameMode = "Ai"
         }
 
         btnEasy.setOnClickListener {
-            btnEasy.setBackgroundColor(Color.BLUE)
+            setButtonClicked(btnEasy)
+            setButtonInitial(btnMedium)
+            setButtonInitial(btnGow)
+
             difficulty = "Easy"
+            btnStartGame.isEnabled = true
+            setButtonInitial(btnStartGame)
         }
 
         btnMedium.setOnClickListener {
+            setButtonInitial(btnEasy)
+            setButtonInitial(btnGow)
+            setButtonClicked(btnMedium)
+
             difficulty = "Medium"
-            btnMedium.setBackgroundColor(Color.BLUE)
+            btnStartGame.isEnabled = true
+            setButtonInitial(btnStartGame)
         }
 
         btnGow.setOnClickListener {
+            setButtonInitial(btnEasy)
+            setButtonInitial(btnMedium)
+            setButtonClicked(btnGow)
+
             difficulty = "Hard"
-            btnGow.setBackgroundColor(Color.BLUE)
+            btnStartGame.isEnabled = true
+            setButtonInitial(btnStartGame)
         }
 
-        val player1Name = player1Name.text.toString()
-
         btnStartGame.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
-                bundle.putString("playMode", gameMode)
-                bundle.putString("difficulty", difficulty)
+
+            val player1Name = player1Name.text.toString()
+            val player2Name = player2Name.text.toString()
+            val players = viewModel.allPlayersAndScoreSync.get()
+
+            viewModel.allPlayersAndScore.observe(this, Observer {
+                val players = it
+
+                viewModel.allPlayersAndScore.removeObservers(this)
             })
+
+
+            if((gameMode == "Versus" && player1Name.trim().isNotEmpty() && player2Name.trim().isNotEmpty()) ||
+                (gameMode == "Ai" && player1Name.trim().isNotEmpty() && difficulty != null) ||
+                (player1Name !== player2Name && player2Name !== player1Name && player1Name !== "TTTBot" && player2Name !== "TTTBot")) {
+
+                val player1 = players?.find { player -> player.name == player1Name } ?: run {
+                    val player = Player(player1Name, 0)
+                    viewModel.insert(player)
+                    player
+                }
+
+                val player2 = if (gameMode == "Versus") {
+                    players?.find { player -> player.name == player2Name } ?: run {
+                        val player = Player(player2Name, 0)
+                        viewModel.insert(player)
+                        player
+                    }
+                } else null
+
+                val bot = players?.find { player -> player.name == "TTTBot" } ?: run {
+                    val player = Player("TTTBot", 0)
+                    viewModel.insert(player)
+                    player
+                }
+
+                findNavController().navigate(R.id.action_startFragment_to_gameFragment, Bundle().also { bundle ->
+                    bundle.putString("playMode", gameMode)
+                    bundle.putString("difficulty", difficulty)
+                    bundle.putParcelable("player", player1)
+                    if(player2 != null) bundle.putParcelable("player2", player2)
+                    if(gameMode == "Ai") bundle.putParcelable("player2", bot)
+                })
+            } else {
+                if (gameMode == "Versus" && player1Name.trim().isNotEmpty() && player2Name.trim().isNotEmpty()) {
+                    Toast.makeText(context, "Please fill in required fields!", Toast.LENGTH_SHORT).show()
+                } else if (gameMode == "Ai" && player1Name.trim().isNotEmpty() && difficulty != null) {
+                    Toast.makeText(context, "Please fill in required fields!", Toast.LENGTH_SHORT).show()
+                } else if(player1Name == player2Name || player2Name == player1Name) {
+                    Toast.makeText(context, "Names cannot be the same", Toast.LENGTH_SHORT).show()
+                } else if(player1Name == "TTTBot" || player2Name == "TTTBot") {
+                    Toast.makeText(context, "TTTBot is a reserved name", Toast.LENGTH_SHORT).show()
+                }
+            }
+            
         }
     }
 }

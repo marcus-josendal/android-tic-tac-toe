@@ -10,7 +10,11 @@ import android.arch.persistence.room.Query
 interface PlayerDao {
 
     @Query("SELECT * FROM player_table")
-    fun getAll(): List<Player>
+    fun getAll(): LiveData<List<Player>>
+
+
+    @Query("SELECT * FROM player_table")
+    fun getAllSync(): List<Player>
 
     /*
     @Query("SELECT score FROM player_table WHERE name LIKE :name")
@@ -21,6 +25,9 @@ interface PlayerDao {
 
     @Query("SELECT * FROM player_table ORDER BY score ASC")
     fun getAllByAscendingScore(): LiveData<List<Player>>
+
+    @Query("SELECT score FROM player_table WHERE name = :name")
+    fun getScoreByName(name: String): LiveData<Int>
 
     @Insert
     fun insert(player: Player)
