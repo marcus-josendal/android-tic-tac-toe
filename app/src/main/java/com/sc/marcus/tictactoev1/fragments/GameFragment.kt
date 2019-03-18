@@ -3,6 +3,7 @@ package com.sc.marcus.tictactoev1.fragments
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,7 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(GameViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
+        } ?: throw Exception("Invalid Activity") as Throwable
 
         playMode = arguments?.getString("playMode").toString()
         val difficulty = arguments?.getString("difficulty").toString()
@@ -45,8 +46,9 @@ class GameFragment : Fragment() {
             throw Exception("This should never happen")
         }
         player2 = arguments?.getParcelable("player2")!!
+        timer.start()
 
-        Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty Player1: $player1 Player2: $player2", Toast.LENGTH_LONG).show()
+        //Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty Player1: $player1 Player2: $player2", Toast.LENGTH_LONG).show()
 
         val engine = GameEngine(playMode, difficulty)
         btnArray = arrayListOf(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
@@ -144,26 +146,23 @@ class GameFragment : Fragment() {
         when {
             engine.checkIfWon(xArray, winningList) -> {
                 winnerText.text = "X won!"
-                disableButtons(btnArray)
+                disableButtonsAndClock(btnArray)
                 viewModel.updateScoreByName(++player1.score, player1.name)
             }
             engine.checkIfWon(oArray, winningList) -> {
                 winnerText.text = "O won!"
-                disableButtons(btnArray)
-                if(playMode == "Ai") {
-                    viewModel.updateScoreByName(++player2.score, player2.name)
-                } else if(playMode == "Versus") {
-                    viewModel.updateScoreByName(++player2.score, player2.name)
-                }
+                disableButtonsAndClock(btnArray)
+                viewModel.updateScoreByName(++player2.score, player2.name)
             }
             engine.returnOArray().size == 4 && engine.returnXArray().size == 5 && !engine.checkIfWon(oArray, winningList) && !engine.checkIfWon(xArray, winningList) -> {
                 winnerText.text = "Draw!"
-                disableButtons(btnArray)
+                disableButtonsAndClock(btnArray)
             }
         }
     }
 
-    private fun disableButtons(btnArray: ArrayList<Button>) {
+    private fun disableButtonsAndClock(btnArray: ArrayList<Button>) {
+        timer.stop()
         btnArray.map { button ->
             button.isEnabled = false
         }
@@ -172,6 +171,7 @@ class GameFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun resetGame(engine: GameEngine, btnArray: ArrayList<Button>) {
         winnerText.text = "Waiting for result.."
+        timer.base = SystemClock.elapsedRealtime()
         btnArray.map { button ->
             button.text = ""
             button.isEnabled = true

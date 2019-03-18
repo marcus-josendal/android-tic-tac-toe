@@ -19,6 +19,6 @@
     </fragment>
     <fragment android:id="@+id/highscoreFragment" android:name="com.sc.marcus.tictactoev1.fragments.HighscoreFragment"
               android:label="HighscoreFragment"/>
-    <fragment android:id="@+id/playerFragment" android:name="com.sc.marcus.tictactoev1.fragments.PlayerFragment"
-              android:label="fragment_player_list" tools:layout="@layout/fragment_player_list"/>
+    <fragment android:id="@+id/playerFragment" android:name="com.sc.marcus.tictactoev1.fragments.HighscoreFragment"
+              android:label="fragment_player_list" tools:layout="@layout/fragment_highscore_list"/>
 </navigation>

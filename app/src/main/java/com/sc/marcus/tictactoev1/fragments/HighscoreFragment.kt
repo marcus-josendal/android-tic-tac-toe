@@ -13,9 +13,8 @@ import android.view.ViewGroup
 import com.sc.marcus.tictactoev1.R
 import com.sc.marcus.tictactoev1.database.GameViewModel
 
-class PlayerFragment : Fragment() {
+class HighscoreFragment : Fragment() {
 
-    // TODO: Customize parameters
     private var columnCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,7 @@ class PlayerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_player_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_highscore_list, container, false)
         val viewModel = activity?.run {
             ViewModelProviders.of(this).get(GameViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
@@ -41,7 +40,7 @@ class PlayerFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyPlayerRecyclerViewAdapter(
+                adapter = HighscoreRecyclerViewAdapter(
                     viewModel.allPlayersAndScore.value ?: emptyList()
                 )
             }
@@ -49,7 +48,7 @@ class PlayerFragment : Fragment() {
         viewModel.allPlayersAndScore.observe(this, Observer { players ->
             if (view is RecyclerView && players != null) {
                 val adapter = view.adapter
-                if (adapter is MyPlayerRecyclerViewAdapter) {
+                if (adapter is HighscoreRecyclerViewAdapter) {
                     adapter.setData(players)
                 }
             }
@@ -60,13 +59,11 @@ class PlayerFragment : Fragment() {
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            PlayerFragment().apply {
+            HighscoreFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

@@ -138,15 +138,8 @@ class StartFragment : Fragment() {
             val player2Name = player2Name.text.toString()
             val players = viewModel.allPlayersAndScoreSync.get()
 
-            viewModel.allPlayersAndScore.observe(this, Observer {
-                val players = it
-
-                viewModel.allPlayersAndScore.removeObservers(this)
-            })
-
-
-            if((gameMode == "Versus" && player1Name.trim().isNotEmpty() && player2Name.trim().isNotEmpty()) ||
-                (gameMode == "Ai" && player1Name.trim().isNotEmpty() && difficulty != null) ||
+            if((gameMode == "Versus" && player1Name.isNotEmpty() && player2Name.isNotEmpty()) ||
+                (gameMode == "Ai" && player1Name.isNotEmpty() && difficulty != null) ||
                 (player1Name !== player2Name && player2Name !== player1Name && player1Name !== "TTTBot" && player2Name !== "TTTBot")) {
 
                 val player1 = players?.find { player -> player.name == player1Name } ?: run {

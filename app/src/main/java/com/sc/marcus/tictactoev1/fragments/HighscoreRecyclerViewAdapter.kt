@@ -8,15 +8,15 @@ import android.widget.TextView
 import com.sc.marcus.tictactoev1.R
 import com.sc.marcus.tictactoev1.database.Player
 
-import kotlinx.android.synthetic.main.fragment_player.view.*
+import kotlinx.android.synthetic.main.fragment_highscore_player.view.*
 
-class MyPlayerRecyclerViewAdapter(
+class HighscoreRecyclerViewAdapter(
     private var mValues: List<Player>
-) : RecyclerView.Adapter<MyPlayerRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<HighscoreRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_player, parent, false)
+            .inflate(R.layout.fragment_highscore_player, parent, false)
         return ViewHolder(view)
     }
 
