@@ -125,9 +125,7 @@ class StartFragment : Fragment() {
             val player2Name = player2Name.text.toString()
             val players = viewModel.allPlayersAndScoreSync.get()
 
-            if((gameMode == "Versus" && player1Name.isNotEmpty() && player2Name.isNotEmpty()) ||
-                (gameMode == "Ai" && player1Name.isNotEmpty() && difficulty != null) ||
-                (player1Name !== player2Name && player2Name !== player1Name && player1Name !== "TTTBot" && player2Name !== "TTTBot")) {
+            if(player1Name.isNotEmpty() && player1Name != "TTTBot" && player2Name != "TTTBot" && player1Name != player2Name && player2Name != player1Name) {
 
                 val player1 = players?.find { player -> player.name == player1Name } ?: run {
                     val player = Player(player1Name, 0)
@@ -157,9 +155,7 @@ class StartFragment : Fragment() {
                     if(gameMode == "Ai") bundle.putParcelable("player2", bot)
                 })
             } else {
-                if (gameMode == "Versus" && player1Name.trim().isNotEmpty() && player2Name.trim().isNotEmpty()) {
-                    Toast.makeText(context, "Please fill in required fields!", Toast.LENGTH_SHORT).show()
-                } else if (gameMode == "Ai" && player1Name.trim().isNotEmpty() && difficulty != null) {
+                if (player1Name.isEmpty()) {
                     Toast.makeText(context, "Please fill in required fields!", Toast.LENGTH_SHORT).show()
                 } else if(player1Name == player2Name || player2Name == player1Name) {
                     Toast.makeText(context, "Names cannot be the same", Toast.LENGTH_SHORT).show()
