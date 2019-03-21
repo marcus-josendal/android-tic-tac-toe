@@ -24,4 +24,5 @@
     <string name="player1NameString">Player</string>
     <string name="btnResetString">Reset</string>
     <string name="player2String">Player 2</string>
+    <string name="playersText">TextView</string>
 </resources>

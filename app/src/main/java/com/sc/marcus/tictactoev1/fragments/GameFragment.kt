@@ -34,6 +34,7 @@ class GameFragment : Fragment() {
     lateinit var player1: Player
     lateinit var player2: Player
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = activity?.run {
@@ -47,8 +48,7 @@ class GameFragment : Fragment() {
         }
         player2 = arguments?.getParcelable("player2")!!
         timer.start()
-
-        //Toast.makeText(context, "Playmode: $playMode Difficulty: $difficulty Player1: $player1 Player2: $player2", Toast.LENGTH_LONG).show()
+        playersText.text = "${player1.name} VS. ${player2.name}"
 
         val engine = GameEngine(playMode, difficulty)
         btnArray = arrayListOf(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
@@ -145,12 +145,12 @@ class GameFragment : Fragment() {
 
         when {
             engine.checkIfWon(xArray, winningList) -> {
-                winnerText.text = "X won!"
+                winnerText.text = "${player1.name} won!"
                 disableButtonsAndClock(btnArray)
                 viewModel.updateScoreByName(++player1.score, player1.name)
             }
             engine.checkIfWon(oArray, winningList) -> {
-                winnerText.text = "O won!"
+                winnerText.text = "${player2.name} won!"
                 disableButtonsAndClock(btnArray)
                 viewModel.updateScoreByName(++player2.score, player2.name)
             }
@@ -172,6 +172,7 @@ class GameFragment : Fragment() {
     private fun resetGame(engine: GameEngine, btnArray: ArrayList<Button>) {
         winnerText.text = "Waiting for result.."
         timer.base = SystemClock.elapsedRealtime()
+        timer.start()
         btnArray.map { button ->
             button.text = ""
             button.isEnabled = true

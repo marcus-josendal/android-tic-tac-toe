@@ -47,10 +47,12 @@ class StartFragment : Fragment() {
         btnMedium.isEnabled = false
         btnGow.isEnabled = false
 
-        fun setButtonInitial(btn: Button) {
-            btn.setBackgroundColor(Color.WHITE)
-            btn.setTextColor(Color.BLACK)
-            btn.setBackgroundResource(R.drawable.btn_border)
+        fun setButtonsInitial(btnArray: List<Button>) {
+            btnArray.map{ btn ->
+                btn.setBackgroundColor(Color.WHITE)
+                btn.setTextColor(Color.BLACK)
+                btn.setBackgroundResource(R.drawable.btn_border)
+            }
         }
 
         fun setButtonClicked(btn: Button) {
@@ -62,6 +64,7 @@ class StartFragment : Fragment() {
             btnArray.forEach { button ->
                 button.setBackgroundResource(R.drawable.btn_border_disabled)
                 button.setTextColor(Color.GRAY)
+                button.isEnabled = false
             }
         }
 
@@ -69,18 +72,11 @@ class StartFragment : Fragment() {
         setButtonsDisabledStyle(listOf(btnStartGame))
 
         btnVs.setOnClickListener {
+            setButtonsInitial(listOf(btnAi, btnEasy, btnMedium, btnGow, btnStartGame))
             setButtonClicked(btnVs)
-            setButtonInitial(btnAi)
-            setButtonInitial(btnEasy)
-            setButtonInitial(btnMedium)
-            setButtonInitial(btnGow)
-            setButtonInitial(btnStartGame)
             setButtonsDisabledStyle(listOf(btnEasy, btnMedium, btnGow))
             difficulty = null
 
-            btnEasy.isEnabled = false
-            btnMedium.isEnabled = false
-            btnGow.isEnabled = false
             player2Name.isEnabled = true
             btnStartGame.isEnabled = true
 
@@ -88,12 +84,9 @@ class StartFragment : Fragment() {
         }
 
         btnAi.setOnClickListener {
-
+            setButtonsInitial(listOf(btnVs, btnEasy, btnMedium, btnGow))
+            setButtonsDisabledStyle(listOf(btnStartGame))
             setButtonClicked(btnAi)
-            setButtonInitial(btnVs)
-            setButtonInitial(btnEasy)
-            setButtonInitial(btnMedium)
-            setButtonInitial(btnGow)
 
             btnEasy.isEnabled = true
             btnMedium.isEnabled = true
@@ -104,32 +97,26 @@ class StartFragment : Fragment() {
 
         btnEasy.setOnClickListener {
             setButtonClicked(btnEasy)
-            setButtonInitial(btnMedium)
-            setButtonInitial(btnGow)
+            setButtonsInitial(listOf(btnMedium, btnGow, btnStartGame))
 
             difficulty = "Easy"
             btnStartGame.isEnabled = true
-            setButtonInitial(btnStartGame)
         }
 
         btnMedium.setOnClickListener {
-            setButtonInitial(btnEasy)
-            setButtonInitial(btnGow)
+            setButtonsInitial(listOf(btnEasy, btnGow, btnStartGame))
             setButtonClicked(btnMedium)
 
             difficulty = "Medium"
             btnStartGame.isEnabled = true
-            setButtonInitial(btnStartGame)
         }
 
         btnGow.setOnClickListener {
-            setButtonInitial(btnEasy)
-            setButtonInitial(btnMedium)
+            setButtonsInitial(listOf(btnEasy, btnMedium, btnStartGame))
             setButtonClicked(btnGow)
 
             difficulty = "Hard"
             btnStartGame.isEnabled = true
-            setButtonInitial(btnStartGame)
         }
 
         btnStartGame.setOnClickListener {

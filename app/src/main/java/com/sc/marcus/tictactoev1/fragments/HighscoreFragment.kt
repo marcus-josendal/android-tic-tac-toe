@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sc.marcus.tictactoev1.R
 import com.sc.marcus.tictactoev1.database.GameViewModel
+import kotlinx.android.synthetic.main.fragment_highscore_list.*
 
 class HighscoreFragment : Fragment() {
 
@@ -23,6 +24,8 @@ class HighscoreFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
+
+
     }
 
     override fun onCreateView(
@@ -33,9 +36,10 @@ class HighscoreFragment : Fragment() {
         val viewModel = activity?.run {
             ViewModelProviders.of(this).get(GameViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+        val recyclerView = view.findViewById<RecyclerView>(R.id.list)
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
+        if (recyclerView is RecyclerView) {
+            with(recyclerView) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
@@ -46,8 +50,8 @@ class HighscoreFragment : Fragment() {
             }
         }
         viewModel.allPlayersAndScore.observe(this, Observer { players ->
-            if (view is RecyclerView && players != null) {
-                val adapter = view.adapter
+            if (recyclerView is RecyclerView && players != null) {
+                val adapter = recyclerView.adapter
                 if (adapter is HighscoreRecyclerViewAdapter) {
                     adapter.setData(players)
                 }
