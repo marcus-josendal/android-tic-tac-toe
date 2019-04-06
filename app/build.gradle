@@ -41,8 +41,6 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
     //Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutines"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
     implementation 'com.android.support:support-v4:28.0.0'

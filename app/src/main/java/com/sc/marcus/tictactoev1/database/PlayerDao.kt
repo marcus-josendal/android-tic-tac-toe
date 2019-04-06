@@ -12,13 +12,8 @@ interface PlayerDao {
     @Query("SELECT * FROM player_table")
     fun getAll(): LiveData<List<Player>>
 
-
     @Query("SELECT * FROM player_table")
     fun getAllSync(): List<Player>
-
-    /*
-    @Query("SELECT score FROM player_table WHERE name LIKE :name")
-    fun findScoreByName(name: String) */
 
     @Query("UPDATE player_table SET score = :score WHERE name = :name")
     fun updateScoreByName(score: Int, name: String)

@@ -8,7 +8,6 @@ import android.os.AsyncTask
 
 class PlayerRepository(private val application: Application) {
     val playerDaoRen = AppDatabase.getDatabase(application)
-    //val allPlayersAndScore: LiveData<List<Player>> = playerDaoRen.getAllByAscendingScore()
 
     @WorkerThread
     fun insert(player: Player) {

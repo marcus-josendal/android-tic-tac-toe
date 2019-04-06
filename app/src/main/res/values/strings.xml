@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- BUTTON STRINGS -->
     <string name="app_name">TicTacToeV1</string>
     <string name="btn1String"></string>
     <string name="btn2String"></string>
@@ -9,20 +11,20 @@
     <string name="btn7String"></string>
     <string name="btn8String"></string>
     <string name="btn9String"></string>
-    <string name="headlineString">Tic Tac Toe V1</string>
-    <string name="winnerText">Waiting for result ..</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="btnAi">Ai</string>
-    <string name="btnVs">Versus</string>
+    <string name="btnAiString">Ai</string>
+    <string name="btnVsString">Versus</string>
     <string name="btnEasyString">Easy</string>
     <string name="btnMediumString">Medium</string>
     <string name="btnGowString">Good luck</string>
     <string name="btnStartGameString">Start Game!</string>
     <string name="btnHighscoreString">Leaderboard</string>
-    <string name="player1NameString">Player</string>
     <string name="btnResetString">Reset</string>
+
+    <!-- OTHER STRING VALUES -->
+    <string name="headlineString">Tic Tac Toe V1</string>
+    <string name="winnerString">Waiting for result ..</string>
+    <string name="player1NameString">Player</string>
     <string name="player2String">Player 2</string>
-    <string name="playersText">TextView</string>
+    <string name="playersString">TextView</string>
+
 </resources>

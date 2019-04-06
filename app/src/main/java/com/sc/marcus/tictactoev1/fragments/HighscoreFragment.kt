@@ -18,16 +18,6 @@ class HighscoreFragment : Fragment() {
 
     private var columnCount = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +27,7 @@ class HighscoreFragment : Fragment() {
             ViewModelProviders.of(this).get(GameViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         val recyclerView = view.findViewById<RecyclerView>(R.id.list)
-        // Set the adapter
+
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
                 layoutManager = when {
@@ -58,19 +48,5 @@ class HighscoreFragment : Fragment() {
             }
         })
         return view
-    }
-
-
-    companion object {
-
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HighscoreFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }
